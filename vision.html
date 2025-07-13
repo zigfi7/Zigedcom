@@ -1,0 +1,1057 @@
+Mam zadanie dla ciebie. chce zwizualizowac drzewo genealogiczne w jakis sensowny dynamiczny sposob. Na wejsciu mam plik json - powiedzmy ze zaciagniety z serwera (cors sie nie przejmuj serwer ogarne)
+dane do wizualizacji zgodne z:
+{
+  "528c81b7-07af-4740-9864-75f9d7832179": {
+    "name": {
+      "first": "Artur Daniel",
+      "last": "Kujawa"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1981",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [],
+      "children": [],
+      "parents": [
+        "ef7ea8a9-5da1-449b-b22b-230db478b583",
+        "cb010698-25bc-44f7-8a3d-278eddd29ae9"
+      ]
+    }
+  },
+  "ef7ea8a9-5da1-449b-b22b-230db478b583": {
+    "name": {
+      "first": "Edmund Marian",
+      "last": "Kujawa"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1957",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "cb010698-25bc-44f7-8a3d-278eddd29ae9"
+      ],
+      "children": [
+        "528c81b7-07af-4740-9864-75f9d7832179"
+      ],
+      "parents": [
+        "ee573a5d-ac15-4e45-9fcd-5e2076d1341b",
+        "322253b5-1c08-4064-b203-9c9dab52f8fb"
+      ]
+    }
+  },
+  "cb010698-25bc-44f7-8a3d-278eddd29ae9": {
+    "name": {
+      "first": "Dorota Bogumiła",
+      "last": "Głowacka"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1959",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "ef7ea8a9-5da1-449b-b22b-230db478b583"
+      ],
+      "children": [
+        "528c81b7-07af-4740-9864-75f9d7832179"
+      ],
+      "parents": [
+        "b2066c9f-0af8-47b9-909a-3cd204b4b0b7",
+        "6ac777d6-802f-4430-b68b-fcf41f3f1778"
+      ]
+    }
+  },
+  "ee573a5d-ac15-4e45-9fcd-5e2076d1341b": {
+    "name": {
+      "first": "Władysław",
+      "last": "Kujawa"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1928",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "2012",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "322253b5-1c08-4064-b203-9c9dab52f8fb"
+      ],
+      "children": [
+        "ef7ea8a9-5da1-449b-b22b-230db478b583"
+      ],
+      "parents": [
+        "776d4ad0-df01-4534-934a-6987a1de6703",
+        "9368005d-bb46-4da6-ae18-aac2ec4c7d4a"
+      ]
+    }
+  },
+  "322253b5-1c08-4064-b203-9c9dab52f8fb": {
+    "name": {
+      "first": "Jadwiga",
+      "last": "Szymańska"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1931",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "2015",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "ee573a5d-ac15-4e45-9fcd-5e2076d1341b"
+      ],
+      "children": [
+        "ef7ea8a9-5da1-449b-b22b-230db478b583"
+      ],
+      "parents": [
+        "f88c8fbc-9758-46dc-a0e2-58016999cd07",
+        "c63be867-4eba-49d4-bf96-47e786a577d3"
+      ]
+    }
+  },
+  "b2066c9f-0af8-47b9-909a-3cd204b4b0b7": {
+    "name": {
+      "first": "Tadeusz",
+      "last": "Głowacki"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1928",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "2021",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "6ac777d6-802f-4430-b68b-fcf41f3f1778"
+      ],
+      "children": [
+        "cb010698-25bc-44f7-8a3d-278eddd29ae9"
+      ],
+      "parents": [
+        "cbfb21d5-f126-4fe2-a096-20d5599ac191",
+        "9c35a5dd-63f6-495f-9afe-3e2a6a84a56c"
+      ]
+    }
+  },
+  "6ac777d6-802f-4430-b68b-fcf41f3f1778": {
+    "name": {
+      "first": "Jadwiga",
+      "last": "Nocoń"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1937",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "b2066c9f-0af8-47b9-909a-3cd204b4b0b7"
+      ],
+      "children": [
+        "cb010698-25bc-44f7-8a3d-278eddd29ae9"
+      ],
+      "parents": [
+        "e7a49248-a71a-4ab3-b7ba-6e11ccefec7c",
+        "b7862b7e-e29d-4e41-a27e-05978fafcf83"
+      ]
+    }
+  },
+  "776d4ad0-df01-4534-934a-6987a1de6703": {
+    "name": {
+      "first": "Kazimierz",
+      "last": "Kujawa"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1901",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1971",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "9368005d-bb46-4da6-ae18-aac2ec4c7d4a"
+      ],
+      "children": [
+        "ee573a5d-ac15-4e45-9fcd-5e2076d1341b"
+      ],
+      "parents": [
+        "58f2c1bb-e19d-44ca-aef9-cdb11d28d2b7",
+        "612110ca-033f-4a2f-afee-dd1639ca32de"
+      ]
+    }
+  },
+  "9368005d-bb46-4da6-ae18-aac2ec4c7d4a": {
+    "name": {
+      "first": "Władysława",
+      "last": "Agnieszczak"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1905",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1981",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "776d4ad0-df01-4534-934a-6987a1de6703"
+      ],
+      "children": [
+        "ee573a5d-ac15-4e45-9fcd-5e2076d1341b"
+      ],
+      "parents": [
+        "5741fe6e-d06c-44cf-a667-741a2f75d595",
+        "2a142fc6-03ca-49ec-8857-83d6cd60eb2c"
+      ]
+    }
+  },
+  "f88c8fbc-9758-46dc-a0e2-58016999cd07": {
+    "name": {
+      "first": "Józef",
+      "last": "Szymański"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1905",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1980",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "c63be867-4eba-49d4-bf96-47e786a577d3"
+      ],
+      "children": [
+        "322253b5-1c08-4064-b203-9c9dab52f8fb"
+      ],
+      "parents": [
+        "7e286c5b-532d-4002-a995-ce370c737dd9",
+        "bf9ac594-b098-4d43-a631-fd9ecc7f658d"
+      ]
+    }
+  },
+  "c63be867-4eba-49d4-bf96-47e786a577d3": {
+    "name": {
+      "first": "Franciszka",
+      "last": "Kujas"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1906",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1980",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "f88c8fbc-9758-46dc-a0e2-58016999cd07"
+      ],
+      "children": [
+        "322253b5-1c08-4064-b203-9c9dab52f8fb"
+      ],
+      "parents": [
+        "061ae38b-be5f-40fb-a2db-256a34eaceb9",
+        "ae4223f5-6a09-4c77-8dda-8f871d4b1a5c"
+      ]
+    }
+  },
+  "cbfb21d5-f126-4fe2-a096-20d5599ac191": {
+    "name": {
+      "first": "Józef",
+      "last": "Głowacki"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1900",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1981",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "9c35a5dd-63f6-495f-9afe-3e2a6a84a56c"
+      ],
+      "children": [
+        "b2066c9f-0af8-47b9-909a-3cd204b4b0b7"
+      ],
+      "parents": [
+        "d8e13eaa-aa82-4144-93d0-ab050e127dc2",
+        "30c38fe8-b4cb-447b-b073-154a7849cfcb"
+      ]
+    }
+  },
+  "9c35a5dd-63f6-495f-9afe-3e2a6a84a56c": {
+    "name": {
+      "first": "Franciszka",
+      "last": "Wolna"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1904",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1979",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "cbfb21d5-f126-4fe2-a096-20d5599ac191"
+      ],
+      "children": [
+        "b2066c9f-0af8-47b9-909a-3cd204b4b0b7"
+      ],
+      "parents": [
+        "b7544c66-f57a-427a-9b96-e0ab14fac567",
+        "94dd3251-eba0-479f-8517-c16226e55f3b"
+      ]
+    }
+  },
+  "e7a49248-a71a-4ab3-b7ba-6e11ccefec7c": {
+    "name": {
+      "first": "Alojzy",
+      "last": "Nocoń"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1907",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1988",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "b7862b7e-e29d-4e41-a27e-05978fafcf83"
+      ],
+      "children": [
+        "6ac777d6-802f-4430-b68b-fcf41f3f1778"
+      ],
+      "parents": [
+        "b1cea231-3c1f-401b-a991-696c400e37c2",
+        "34b168d6-f0d6-4910-9dc9-e71e398c0836"
+      ]
+    }
+  },
+  "b7862b7e-e29d-4e41-a27e-05978fafcf83": {
+    "name": {
+      "first": "Jadwiga",
+      "last": "Wacławek"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1912",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1987",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "e7a49248-a71a-4ab3-b7ba-6e11ccefec7c"
+      ],
+      "children": [
+        "6ac777d6-802f-4430-b68b-fcf41f3f1778"
+      ],
+      "parents": [
+        "73a9cc43-3c0e-4bfa-ad48-aea0108055fd",
+        "decf9687-7caa-4c0d-9517-2f2a0f4c4f59"
+      ]
+    }
+  },
+  "58f2c1bb-e19d-44ca-aef9-cdb11d28d2b7": {
+    "name": {
+      "first": "Wiktor",
+      "last": "Kujawa"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "612110ca-033f-4a2f-afee-dd1639ca32de"
+      ],
+      "children": [
+        "776d4ad0-df01-4534-934a-6987a1de6703"
+      ],
+      "parents": [
+        "ef37fe2f-cfa9-4cd6-900f-63232411cdb0",
+        "82cfc57c-2fce-4155-9c0b-75f6e042ed1f"
+      ]
+    }
+  },
+  "612110ca-033f-4a2f-afee-dd1639ca32de": {
+    "name": {
+      "first": "Marianna",
+      "last": "Sochacka"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "58f2c1bb-e19d-44ca-aef9-cdb11d28d2b7"
+      ],
+      "children": [
+        "776d4ad0-df01-4534-934a-6987a1de6703"
+      ],
+      "parents": []
+    }
+  },
+  "5741fe6e-d06c-44cf-a667-741a2f75d595": {
+    "name": {
+      "first": "Tomasz",
+      "last": "Agnieszczak"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "2a142fc6-03ca-49ec-8857-83d6cd60eb2c"
+      ],
+      "children": [
+        "9368005d-bb46-4da6-ae18-aac2ec4c7d4a"
+      ],
+      "parents": []
+    }
+  },
+  "2a142fc6-03ca-49ec-8857-83d6cd60eb2c": {
+    "name": {
+      "first": "Antonina",
+      "last": "Konieczna"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "5741fe6e-d06c-44cf-a667-741a2f75d595"
+      ],
+      "children": [
+        "9368005d-bb46-4da6-ae18-aac2ec4c7d4a"
+      ],
+      "parents": []
+    }
+  },
+  "7e286c5b-532d-4002-a995-ce370c737dd9": {
+    "name": {
+      "first": "Jan",
+      "last": "Szymański"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "bf9ac594-b098-4d43-a631-fd9ecc7f658d"
+      ],
+      "children": [
+        "f88c8fbc-9758-46dc-a0e2-58016999cd07"
+      ],
+      "parents": []
+    }
+  },
+  "bf9ac594-b098-4d43-a631-fd9ecc7f658d": {
+    "name": {
+      "first": "Marianna",
+      "last": "Stasiak"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "7e286c5b-532d-4002-a995-ce370c737dd9"
+      ],
+      "children": [
+        "f88c8fbc-9758-46dc-a0e2-58016999cd07"
+      ],
+      "parents": []
+    }
+  },
+  "061ae38b-be5f-40fb-a2db-256a34eaceb9": {
+    "name": {
+      "first": "Jakub",
+      "last": "Kujas"
+    },
+    "sex": "M",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1870",
+        "place": null,
+        "desc": null
+      },
+      {
+        "type": "DEAT",
+        "date": "1943",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "ae4223f5-6a09-4c77-8dda-8f871d4b1a5c"
+      ],
+      "children": [
+        "c63be867-4eba-49d4-bf96-47e786a577d3"
+      ],
+      "parents": []
+    }
+  },
+  "ae4223f5-6a09-4c77-8dda-8f871d4b1a5c": {
+    "name": {
+      "first": "Józefa",
+      "last": "Pawlak"
+    },
+    "sex": "F",
+    "events": [
+      {
+        "type": "BIRT",
+        "date": "1869",
+        "place": null,
+        "desc": null
+      }
+    ],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "061ae38b-be5f-40fb-a2db-256a34eaceb9"
+      ],
+      "children": [
+        "c63be867-4eba-49d4-bf96-47e786a577d3"
+      ],
+      "parents": []
+    }
+  },
+  "d8e13eaa-aa82-4144-93d0-ab050e127dc2": {
+    "name": {
+      "first": "Walenty",
+      "last": "Głowacki"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "30c38fe8-b4cb-447b-b073-154a7849cfcb"
+      ],
+      "children": [
+        "cbfb21d5-f126-4fe2-a096-20d5599ac191"
+      ],
+      "parents": []
+    }
+  },
+  "30c38fe8-b4cb-447b-b073-154a7849cfcb": {
+    "name": {
+      "first": "Marianna",
+      "last": "Krzyżostaniak"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "d8e13eaa-aa82-4144-93d0-ab050e127dc2"
+      ],
+      "children": [
+        "cbfb21d5-f126-4fe2-a096-20d5599ac191"
+      ],
+      "parents": []
+    }
+  },
+  "b7544c66-f57a-427a-9b96-e0ab14fac567": {
+    "name": {
+      "first": "Jan",
+      "last": "Wolny"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "94dd3251-eba0-479f-8517-c16226e55f3b"
+      ],
+      "children": [
+        "9c35a5dd-63f6-495f-9afe-3e2a6a84a56c"
+      ],
+      "parents": []
+    }
+  },
+  "94dd3251-eba0-479f-8517-c16226e55f3b": {
+    "name": {
+      "first": "Agnieszka",
+      "last": "Kaczmarek"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "b7544c66-f57a-427a-9b96-e0ab14fac567"
+      ],
+      "children": [
+        "9c35a5dd-63f6-495f-9afe-3e2a6a84a56c"
+      ],
+      "parents": []
+    }
+  },
+  "b1cea231-3c1f-401b-a991-696c400e37c2": {
+    "name": {
+      "first": "Michał",
+      "last": "Nocoń"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "34b168d6-f0d6-4910-9dc9-e71e398c0836"
+      ],
+      "children": [
+        "e7a49248-a71a-4ab3-b7ba-6e11ccefec7c"
+      ],
+      "parents": [
+        "e19b7de6-c77e-4b56-9774-b5860e92f986",
+        "4002799d-5bd0-4a45-a7bc-04de05619276"
+      ]
+    }
+  },
+  "34b168d6-f0d6-4910-9dc9-e71e398c0836": {
+    "name": {
+      "first": "Marianna",
+      "last": "Lis"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "b1cea231-3c1f-401b-a991-696c400e37c2"
+      ],
+      "children": [
+        "e7a49248-a71a-4ab3-b7ba-6e11ccefec7c"
+      ],
+      "parents": []
+    }
+  },
+  "73a9cc43-3c0e-4bfa-ad48-aea0108055fd": {
+    "name": {
+      "first": "Augustyn",
+      "last": "Wacławek"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "decf9687-7caa-4c0d-9517-2f2a0f4c4f59"
+      ],
+      "children": [
+        "b7862b7e-e29d-4e41-a27e-05978fafcf83"
+      ],
+      "parents": []
+    }
+  },
+  "decf9687-7caa-4c0d-9517-2f2a0f4c4f59": {
+    "name": {
+      "first": "Konstancja",
+      "last": "Hajdasz"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "73a9cc43-3c0e-4bfa-ad48-aea0108055fd"
+      ],
+      "children": [
+        "b7862b7e-e29d-4e41-a27e-05978fafcf83"
+      ],
+      "parents": []
+    }
+  },
+  "ef37fe2f-cfa9-4cd6-900f-63232411cdb0": {
+    "name": {
+      "first": "Józef",
+      "last": "Kujawa"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "82cfc57c-2fce-4155-9c0b-75f6e042ed1f"
+      ],
+      "children": [
+        "58f2c1bb-e19d-44ca-aef9-cdb11d28d2b7"
+      ],
+      "parents": []
+    }
+  },
+  "82cfc57c-2fce-4155-9c0b-75f6e042ed1f": {
+    "name": {
+      "first": "Marianna",
+      "last": "Jankowska"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "ef37fe2f-cfa9-4cd6-900f-63232411cdb0"
+      ],
+      "children": [
+        "58f2c1bb-e19d-44ca-aef9-cdb11d28d2b7"
+      ],
+      "parents": []
+    }
+  },
+  "56e68fcd-8970-4403-824c-1344df513846": {
+    "name": {
+      "first": "Jakub",
+      "last": "Nowicki"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "58565095-c9fa-421b-b0e6-bafed8b7c07d"
+      ],
+      "children": [],
+      "parents": []
+    }
+  },
+  "58565095-c9fa-421b-b0e6-bafed8b7c07d": {
+    "name": {
+      "first": "Marianna",
+      "last": "Rataj"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "56e68fcd-8970-4403-824c-1344df513846"
+      ],
+      "children": [],
+      "parents": []
+    }
+  },
+  "e80076d5-f14e-4a5b-afa3-f34207916783": {
+    "name": {
+      "first": "Andrzej",
+      "last": "Kujas"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "95c85ca1-169c-4b5b-8f66-897d4ff3d7e1"
+      ],
+      "children": [],
+      "parents": []
+    }
+  },
+  "95c85ca1-169c-4b5b-8f66-897d4ff3d7e1": {
+    "name": {
+      "first": "Franciszka",
+      "last": "Ratajczak"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "e80076d5-f14e-4a5b-afa3-f34207916783"
+      ],
+      "children": [],
+      "parents": []
+    }
+  },
+  "e19b7de6-c77e-4b56-9774-b5860e92f986": {
+    "name": {
+      "first": "Ławrentij",
+      "last": "Nocoń"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "4002799d-5bd0-4a45-a7bc-04de05619276"
+      ],
+      "children": [
+        "b1cea231-3c1f-401b-a991-696c400e37c2"
+      ],
+      "parents": [
+        "4e250676-eee5-4b7f-949f-6a9f0e86651d",
+        "83ca1fe4-a168-49ec-aece-5e396560a6d2"
+      ]
+    }
+  },
+  "4002799d-5bd0-4a45-a7bc-04de05619276": {
+    "name": {
+      "first": "Marianna",
+      "last": "Kapera"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "e19b7de6-c77e-4b56-9774-b5860e92f986"
+      ],
+      "children": [
+        "b1cea231-3c1f-401b-a991-696c400e37c2"
+      ],
+      "parents": [
+        "cdc1bc7b-93ab-4af8-b351-e70a7e957c65",
+        "4dfabaac-d40c-4af3-b4f2-b375a3ab9e9e"
+      ]
+    }
+  },
+  "4e250676-eee5-4b7f-949f-6a9f0e86651d": {
+    "name": {
+      "first": "Antoni",
+      "last": "Nocoń"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "83ca1fe4-a168-49ec-aece-5e396560a6d2"
+      ],
+      "children": [
+        "e19b7de6-c77e-4b56-9774-b5860e92f986"
+      ],
+      "parents": []
+    }
+  },
+  "83ca1fe4-a168-49ec-aece-5e396560a6d2": {
+    "name": {
+      "first": "Katarzyna",
+      "last": "Gościańska"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "4e250676-eee5-4b7f-949f-6a9f0e86651d"
+      ],
+      "children": [
+        "e19b7de6-c77e-4b56-9774-b5860e92f986"
+      ],
+      "parents": []
+    }
+  },
+  "cdc1bc7b-93ab-4af8-b351-e70a7e957c65": {
+    "name": {
+      "first": "Marcin",
+      "last": "Kapera"
+    },
+    "sex": "M",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "4dfabaac-d40c-4af3-b4f2-b375a3ab9e9e"
+      ],
+      "children": [
+        "4002799d-5bd0-4a45-a7bc-04de05619276"
+      ],
+      "parents": []
+    }
+  },
+  "4dfabaac-d40c-4af3-b4f2-b375a3ab9e9e": {
+    "name": {
+      "first": "Marianna",
+      "last": "Ranoszek"
+    },
+    "sex": "F",
+    "events": [],
+    "media": [],
+    "variations": [],
+    "relatives": {
+      "spouses": [
+        "cdc1bc7b-93ab-4af8-b351-e70a7e957c65"
+      ],
+      "children": [
+        "4002799d-5bd0-4a45-a7bc-04de05619276"
+      ],
+      "parents": []
+    }
+  }
+}
