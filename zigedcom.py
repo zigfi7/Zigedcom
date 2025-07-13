@@ -4,11 +4,11 @@
 """
 zigedcom v3 - Zaawansowane narzędzie CLI do zarządzania danymi genealogicznymi.
 
-Obsługuje import/eksport dla formatów GEDCOM, CSV i własnego formatu ZIG-JSON.
+Obsługuje import/eksport dla formatów GEDCOM, CSV i własnego formatu ZGE (JSON).
 - Nowa, elastyczna struktura bazy danych oparta na wydarzeniach.
 - Obsługa mediów w formacie Base64.
 - Inteligentne mapowanie kolumn przy imporcie z CSV.
-- Ulepszony parser GEDCOM.
+- Ulepszony parser i eksporter GEDCOM.
 """
 
 import argparse
@@ -113,7 +113,7 @@ def get_session(database_url: str):
         sys.exit(1)
 
 def find_similar_person(session, first_name, last_name):
-    # ... (bez zmian)
+    """Wyszukuje w bazie danych osoby o podobnym imieniu i nazwisku."""
     candidates = session.query(Person).all()
     for candidate in candidates:
         name_ratio = fuzz.ratio(candidate.first_name.lower(), first_name.lower())
@@ -268,20 +268,15 @@ def import_gedcom_to_db(session, gedcom_file: str):
             last_name = person_data.get('last_name', 'Nieznane')
 
             # --- ZMODYFIKOWANA LOGIKA ---
-            # 1. Spróbuj znaleźć podobną osobę w naszej bazie
             person = find_similar_person(session, first_name, last_name)
             
             if person:
-                # Znaleziono podobną osobę, użyj jej
                 print(f"  Znaleziono podobną osobę dla GEDCOM ID {ged_id}: {person.first_name} {person.last_name}. Scalam dane.")
-                # Jeśli nasza osoba nie ma jeszcze ID z GEDCOM, przypisz je.
                 if not person.gedcom_id:
                     person.gedcom_id = ged_id
             else:
-                # 2. Jeśli nie ma podobnej, sprawdź czy ID z GEDCOM już istnieje
                 person = session.query(Person).filter_by(gedcom_id=ged_id).first()
                 if not person:
-                    # 3. Dopiero teraz stwórz nową osobę
                     print(f"  Nie znaleziono podobnej osoby. Dodaję nową z GEDCOM ID {ged_id}: {first_name} {last_name}")
                     person = Person(
                         first_name=first_name,
@@ -294,10 +289,8 @@ def import_gedcom_to_db(session, gedcom_file: str):
             session.flush()
             gedcom_to_db_id_map[ged_id] = person.id
             
-            # Dodaj/zaktualizuj wydarzenia dla znalezionej lub nowej osoby
             for event_type, event_data in person_data.items():
                 if isinstance(event_data, dict):
-                    # Sprawdź czy podobne wydarzenie już nie istnieje, aby uniknąć duplikatów
                     existing_event = session.query(Event).filter_by(
                         person_id=person.id,
                         event_type=event_type,
@@ -344,16 +337,79 @@ def import_gedcom_to_db(session, gedcom_file: str):
         session.rollback()
 
 def export_db_to_gedcom(session, gedcom_file: str):
-    """Eksportuje dane z bazy do pliku GEDCOM (ulepszona wersja)."""
-    # ... (logika podobna do poprzedniej, ale odczytująca z nowej struktury Event)
-    print("Eksport do GEDCOM nie został jeszcze w pełni zrefaktoryzowany dla v3.")
+    """Eksportuje dane z bazy do pliku GEDCOM (zrefaktoryzowana wersja)."""
+    print(f"Eksportuję do formatu GEDCOM: {gedcom_file}...")
+    try:
+        persons = session.query(Person).all()
+        marriages = session.query(Marriage).all()
+        
+        # Użyj gedcom_id jeśli istnieje, w przeciwnym razie wygeneruj nowy
+        db_to_gedcom_id = {p.id: f"@{p.gedcom_id}@" if p.gedcom_id else f"@I{i+1}@" for i, p in enumerate(persons)}
+        fam_to_gedcom_id = {m.id: f"@F{i+1}@" for i, m in enumerate(marriages)}
+
+        with open(gedcom_file, 'w', encoding='utf-8') as f:
+            f.write("0 HEAD\n1 SOUR ZIGEDCOM\n1 CHAR UTF-8\n")
+
+            for person in persons:
+                gedcom_id = db_to_gedcom_id[person.id]
+                f.write(f"0 {gedcom_id} INDI\n")
+                f.write(f"1 NAME {person.first_name} /{person.last_name}/\n")
+                if person.sex:
+                    f.write(f"1 SEX {person.sex}\n")
+                
+                for event in person.events:
+                    if event.event_type == 'NOTE':
+                         f.write(f"1 NOTE {event.description}\n")
+                    else:
+                        f.write(f"1 {event.event_type}\n")
+                        if event.event_date: f.write(f"2 DATE {event.event_date}\n")
+                        if event.event_place: f.write(f"2 PLAC {event.event_place}\n")
+                        if event.description: f.write(f"2 NOTE {event.description}\n")
+                
+                # Relacje FAMS (jako małżonek w rodzinie)
+                person_marriages = session.query(Marriage).filter((Marriage.person_a_id == person.id) | (Marriage.person_b_id == person.id)).all()
+                for m in person_marriages:
+                    if m.id in fam_to_gedcom_id:
+                        f.write(f"1 FAMS {fam_to_gedcom_id[m.id]}\n")
+                
+                # Relacje FAMC (jako dziecko w rodzinie)
+                parent_rel = session.query(Relationship).filter_by(child_id=person.id).first()
+                if parent_rel:
+                    parent_id = parent_rel.parent_id
+                    parent_marriage = session.query(Marriage).filter((Marriage.person_a_id == parent_id) | (Marriage.person_b_id == parent_id)).first()
+                    if parent_marriage and parent_marriage.id in fam_to_gedcom_id:
+                         f.write(f"1 FAMC {fam_to_gedcom_id[parent_marriage.id]}\n")
+
+            # Eksport Rodzin (FAM)
+            for m in marriages:
+                f.write(f"0 {fam_to_gedcom_id[m.id]} FAM\n")
+                if m.person_a_id in db_to_gedcom_id: f.write(f"1 HUSB {db_to_gedcom_id[m.person_a_id]}\n")
+                if m.person_b_id in db_to_gedcom_id: f.write(f"1 WIFE {db_to_gedcom_id[m.person_b_id]}\n")
+                
+                if m.marriage_date or m.marriage_place:
+                    f.write("1 MARR\n")
+                    if m.marriage_date: f.write(f"2 DATE {m.marriage_date}\n")
+                    if m.marriage_place: f.write(f"2 PLAC {m.marriage_place}\n")
+                
+                children_rels = session.query(Relationship).filter(
+                    (Relationship.parent_id == m.person_a_id) | (Relationship.parent_id == m.person_b_id)
+                ).all()
+                child_ids = {rel.child_id for rel in children_rels}
+                for child_id in child_ids:
+                    if child_id in db_to_gedcom_id:
+                        f.write(f"1 CHIL {db_to_gedcom_id[child_id]}\n")
+
+            f.write("0 TRLR\n")
+        print("Eksport do GEDCOM zakończony pomyślnie.")
+    except Exception as e:
+        print(f"Wystąpił błąd podczas eksportu do GEDCOM: {e}", file=sys.stderr)
 
 
 # --- Funkcje Importu/Eksportu ZIG-JSON ---
 
 def export_db_to_zig_json(session, json_file: str):
-    """Eksportuje bazę danych do własnego formatu ZIG-JSON."""
-    print(f"Eksportuję do formatu ZIG-JSON: {json_file}...")
+    """Eksportuje bazę danych do własnego formatu ZGE (JSON)."""
+    print(f"Eksportuję do formatu ZGE (JSON): {json_file}...")
     output = {}
     persons = session.query(Person).all()
 
@@ -384,13 +440,13 @@ def export_db_to_zig_json(session, json_file: str):
     try:
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(output, f, indent=2, ensure_ascii=False)
-        print("Eksport do ZIG-JSON zakończony pomyślnie.")
+        print("Eksport do ZGE (JSON) zakończony pomyślnie.")
     except Exception as e:
-        print(f"Błąd podczas eksportu do ZIG-JSON: {e}", file=sys.stderr)
+        print(f"Błąd podczas eksportu do ZGE (JSON): {e}", file=sys.stderr)
 
 def import_zig_json_to_db(session, json_file: str):
-    """Importuje dane z pliku ZIG-JSON do bazy danych."""
-    print(f"Importuję z formatu ZIG-JSON: {json_file}...")
+    """Importuje dane z pliku ZGE (JSON) do bazy danych."""
+    print(f"Importuję z formatu ZGE (JSON): {json_file}...")
     try:
         with open(json_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -428,9 +484,9 @@ def import_zig_json_to_db(session, json_file: str):
                     session.add(Relationship(parent_id=parent_id, child_id=person_id))
         
         session.commit()
-        print("Import z ZIG-JSON zakończony pomyślnie.")
+        print("Import z ZGE (JSON) zakończony pomyślnie.")
     except Exception as e:
-        print(f"Błąd podczas importu ZIG-JSON: {e}", file=sys.stderr)
+        print(f"Błąd podczas importu ZGE (JSON): {e}", file=sys.stderr)
         session.rollback()
 
 
@@ -444,12 +500,12 @@ def main():
     imp = parser.add_argument_group('Import Options')
     imp.add_argument('--import-gedcom', type=str, help="Importuj dane z pliku GEDCOM.")
     imp.add_argument('--import-csv', type=str, help="Importuj dane z pliku CSV.")
-    imp.add_argument('--import-zig-json', type=str, help="Importuj dane z pliku ZIG-JSON.")
+    imp.add_argument('--import-zge', type=str, help="Importuj dane z pliku ZGE (JSON).")
     
     exp = parser.add_argument_group('Export Options')
-    exp.add_argument('--export-gedcom', type=str, help="Eksportuj dane do pliku GEDCOM (częściowo zaimplementowane).")
+    exp.add_argument('--export-gedcom', type=str, help="Eksportuj dane do pliku GEDCOM.")
     exp.add_argument('--export-csv', type=str, help="Eksportuj dane do pliku CSV.")
-    exp.add_argument('--export-zig-json', type=str, help="Eksportuj dane do pliku ZIG-JSON.")
+    exp.add_argument('--export-zge', type=str, help="Eksportuj dane do pliku ZGE (JSON).")
     
     args = parser.parse_args()
     Session = get_session(args.db_url)
@@ -458,11 +514,11 @@ def main():
     try:
         if args.import_csv: import_csv_to_db(session, args.import_csv)
         if args.import_gedcom: import_gedcom_to_db(session, args.import_gedcom)
-        if args.import_zig_json: import_zig_json_to_db(session, args.import_zig_json)
+        if args.import_zge: import_zig_json_to_db(session, args.import_zge)
         
-        if args.export_csv: print("Eksport do CSV nie został jeszcze w pełni zrefaktoryzowany dla v3.") # export_db_to_csv(session, args.export_csv)
+        if args.export_csv: print("Eksport do CSV nie został jeszcze w pełni zrefaktoryzowany dla v3.")
         if args.export_gedcom: export_db_to_gedcom(session, args.export_gedcom)
-        if args.export_zig_json: export_db_to_zig_json(session, args.export_zig_json)
+        if args.export_zge: export_db_to_zig_json(session, args.export_zge)
 
     finally:
         session.close()
@@ -475,3 +531,4 @@ if __name__ == "__main__":
         sys.exit(1)
     
     main()
+
